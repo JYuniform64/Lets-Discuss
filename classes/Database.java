@@ -1,3 +1,5 @@
+package com.group.jsp;
+
 public interface Database {
     // Get uid corresponds to a certain username.
     public long getUid(String username);
