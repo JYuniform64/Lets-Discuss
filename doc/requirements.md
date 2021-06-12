@@ -125,3 +125,13 @@
 
 - 根据邮箱返回用户uid。
     该接口对 **Subscribe** 开放。用来认证邮件对应的用户。
+
+##　参考的第三方库
+- email模块
+    https://james.apache.org/
+
+- 认证模块
+    https://github.com/Yubico/java-webauthn-server
+    https://gitee.com/yadong.zhang/JustAuth
+    https://github.com/fujieid/jap
+    
