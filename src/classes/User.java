@@ -2,7 +2,7 @@ package com.group.jsp;
 
 public interface User {
     // Sign-in.
-    // Return uid(greater than 0) on success, -SYS_ERR on system error, -USR_ERR on
+    // Return token(greater than 0) on success, -SYS_ERR on system error, -USR_ERR on
     // user error.
     public long signIn(String email_or_username, String password, boolean is_email);
 
