@@ -31,12 +31,4 @@ public interface Authentication {
     /***************************************************************/
     // Verify the given username and password map to a valid user.
     public boolean authSignIn(String username, String password);
-
-    // Register a user.
-    public boolean SignUp(String username, String password, String email);
-
-    // Close an account given its uid.
-    public boolean destoryAccount(long uid);
-
-    // TODO: business logic on forget password
 }
