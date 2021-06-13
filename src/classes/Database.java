@@ -1,6 +1,7 @@
 package com.group.jsp;
 
 public interface Database {
+    /******************** Authentication***************************/
     // Get uid corresponds to a certain username.
     public long getUid(String username);
 
@@ -21,4 +22,6 @@ public interface Database {
     // Judge whether a email already exists.
     // Should be used in **SignUp**.
     public boolean emailExist(String email);
+
+
 }
