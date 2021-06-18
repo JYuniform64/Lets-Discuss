@@ -3,7 +3,7 @@
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop1" data-toggle="dropdown">
                     Classes
                 </a>
                 <!-- further modification: dynamic generate classes user attended -->
@@ -39,7 +39,7 @@
                 <img src="#" style="width:40px;">
             </a>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
                     Username
                 </a>
                 <!-- further modification: show differently whether login -->
