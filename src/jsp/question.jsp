@@ -18,29 +18,42 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
         integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
         crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/12.0.6/markdown-it.min.js"
-        integrity="sha512-7U8vY7c6UQpBNQOnBg3xKX502NAckvk70H1nWvh6W7izA489jEz+RCN3ntT1VMdXewaSKkOrEBegp/h6SPXrjw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"
         integrity="sha512-W7EehcwtSbRF63FIQlXEOOd5mnq0Et0V0nUOvwcUvjnCKgOLLYbqriQxEQSp63sfrkryxIg/A/O8v8O18QwQCQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/a11y-dark.min.css"
         integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it-latex2img@latest/dist/markdown-it-latex2img.min.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/dist/markdown-it.min.js"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script>hljs.highlightAll();</script>
 
     <title>Let's Discuss</title>
 </head>
 <style>
-    body {
-        font-family: monospace;
+    .sidebar-wrapper {
+        z-index: -1;
+        position: fixed;
+        left: 175px;
+        top: 52px;
+        bottom: 0px;
+        margin-left: -175px;
+        overflow-y: auto;
+        background: #222222;
+        -webkit-transition: all 0.5s ease;
+        -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+        transition: all 0.5s ease;
     }
 </style>
 <script>
     $(document).ready(function () {
-        $('#navbar').load('navbar.html');
-        const textarea = document.getElementById('edit');
-        textarea.addEventListener('keyup', rendermd);
+        $('#navbar').load('navbar.jsp');
+        $('#siderbar').load('QA.jsp');
 
         if (textarea.addEventListener) {
             textarea.addEventListener('keydown', keyHandler, false);
@@ -51,6 +64,7 @@
 
     /* ------------------ Markdown reader ---------------------------- */
     var md = window.markdownit();
+    md.use(window.markdownitLatex2img);
 
     function rendermd() {
         var text = document.getElementById('edit').innerText;
@@ -76,39 +90,15 @@
 <body>
     <div id="navbar">
     </div>
-    <div id="siderbar">
-        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 380px;">
-            <a href="/"
-                class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-                <svg class="bi me-2" width="30" height="24">
-                    <use xlink:href="#bootstrap"></use>
-                </svg>
-                <span class="fs-5 fw-semibold">List group</span>
-            </a>
-            <div class="list-group list-group-flush border-bottom scrollarea">
-                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-                    <div class="d-flex w-100 align-items-center justify-content-between">
-                        <strong class="mb-1">List group item heading</strong>
-                        <small>Wed</small>
-                    </div>
-                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.
-                    </div>
-                </a>
-                <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-                    <div class="d-flex w-100 align-items-center justify-content-between">
-                        <strong class="mb-1">List group item heading</strong>
-                        <small class="text-muted">Tues</small>
-                    </div>
-                    <div class="col-10 mb-1 small">Some placeholder content in a paragraph below the heading and date.
-                    </div>
-                </a>
+    <div class="container">
+        <div class="row">
+            <!-- siderbar: AJAX loaded(QA.jsp). -->
+            <div id="siderbar" class="col-md-3 sidebar-wrapper">
+            </div>
+            <!-- TODO: detailed question and answers -->
+            <div id="main" class="row col-md-9" style="position: absolute; left:25%; width:76%">
             </div>
         </div>
-    </div>
-    <div id="content">
-        <!-- TODO:  -->
-        <div id="edit" class="container-md border border-dark" contenteditable="true"></div>
-        <div id="show" class="container-md border border-dark"></div>
     </div>
     <!-- TODO: footer -->
 </body>
