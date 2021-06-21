@@ -32,6 +32,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script>hljs.highlightAll();</script>
 
+    <script src="js/upvotejs.vanilla.js"></script>
+    <link rel="stylesheet" href="css/upvotejs.css">
+
     <title>Let's Discuss</title>
 </head>
 <style>
@@ -53,7 +56,7 @@
 <script>
     $(document).ready(function () {
         $('#navbar').load('navbar.jsp');
-        $('#siderbar').load('QA.jsp');
+        $('#siderbar').load('question_list.jsp');
 
         if (textarea.addEventListener) {
             textarea.addEventListener('keydown', keyHandler, false);
@@ -84,19 +87,23 @@
             return false;
         }
     }
+    
+    /* ------------------- Vote handler --------------------------- */
+    function vote_handler(obj) {
 
+    }
 </script>
 
 <body>
-    <div id="navbar">
+    <div id="navbar" class="fixed-top">
     </div>
     <div class="container">
         <div class="row">
-            <!-- siderbar: AJAX loaded(QA.jsp). -->
+            <!-- siderbar: AJAX loaded(question_list.jsp). -->
             <div id="siderbar" class="col-md-3 sidebar-wrapper">
             </div>
             <!-- TODO: detailed question and answers -->
-            <div id="main" class="row col-md-9" style="position: absolute; left:25%; width:76%">
+            <div id="main" class="row col-md-9" style="position: absolute; left:25%; width:76%; margin-top: 1em; top: 52px;">
             </div>
         </div>
     </div>

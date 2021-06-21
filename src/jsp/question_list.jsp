@@ -1,12 +1,9 @@
 <%-- This jsp file is used for loadding question list of 'Q&A' page. --%>
 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
-    <a href="/"
-        class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
-        <svg class="bi me-2" width="30" height="24">
-            <use xlink:href="#bootstrap"></use>
-        </svg>
-        <span class="fs-5 fw-semibold">Question List</span>
-    </a>
+    <div class="d-flex flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+        <span class="fs-5 fw-semibold flex-grow-1">Questions</span>
+        <button class="btn btn-primary" type="submit">Ask</button>
+    </div>
     <div class="list-group list-group-flush border-bottom scrollarea">
         <a href="#" class="list-group-item list-group-item-action py-2 lh-tight" style="height: 100px;">
             <div class="row">
