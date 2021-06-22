@@ -1,3 +1,4 @@
+<%@ page import="com.group.jsp.*" %>
 <!DOCTYPE html>
 <html>
 
@@ -27,7 +28,6 @@
     <div id="content">
         <!-- TODO:  -->
     </div>
-
     <!-- TODO: footer -->
 </body>
 
