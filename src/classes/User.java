@@ -1,45 +1,48 @@
 package com.group.jsp;
 
-import java.sql.SQLException;
-
-
 public class User {
-    private User() {
+    enum Types {
+        Student(0),
+        Teacher(1),
+        Admin(2);
+        private final int value;
+        Types(int value) {
+            this.value = value;
+        }
+        public int getValue() {
+            return value;
+        }
+    }
+    public int id;
+    public String name;
+    public String email;
+    public String pass;
+    public Types type;
+
+    User(int id, String name, String email, String pass, Types type) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.pass = pass;
+        this.type = type;
     }
 
-    // Sign-in.
-    // Return token
-    public static long signIn(String email_or_username, String password, boolean is_email)
-            throws SQLException, IllegalArgumentException
-    {
-        String passDigest = Utils.encode(password);
-        String where = "where " +
-                String.format((is_email) ? "email = '%s'" : "username = '%s'", email_or_username) +
-                " AND " +
-                String.format("password = '%s'", passDigest);
-        return (long) DbAccessor.getData("select * from users " + where,
-                (rs) -> {
-                    boolean now = rs.next();
-                    if (now) {
-                        return 0;
-                    } else {
-                        throw new IllegalArgumentException("user or pass incorrect!");
-                    }
-                });
+    public static User makeNewUser(String name, String email, String pass, Types type) {
+        return new User(
+                Utils.makeId(), name, email, pass, type
+        );
     }
 
-    // Register a user.
-    public void signUp(String username, String password, String email) {
-    }
-
-    public boolean destoryAccount(long uid) {
-        return true;
-    }
-
-    // Excute precudure corresponding to forget password.
-    // Return 1 on successfully sending email & register a special token for
-    // resetting password, -SYS_ERR on system error, -USR_ERR on user error.
-    public int forgetPasswdProcedure(String email) {
-        return 0;
+    public static Types parseTypes(int i) {
+        switch (i) {
+            case 0:
+                return Types.Student;
+            case 1:
+                return Types.Teacher;
+            case 2:
+                return Types.Admin;
+            default:
+                return Types.Student;
+        }
     }
 }

@@ -13,9 +13,10 @@ CREATE TABLE IF NOT EXISTS `mydb`.`question` (
     `response_count` INT UNSIGNED ZEROFILL NULL,
     `view_count` INT UNSIGNED ZEROFILL NULL,
     `good_question_count` INT NULL,
-    `teacher_ask` CHAR(1) NULL,
-    `teacher_answer` CHAR(1) NULL,
+    `teacher_ask` BIT NULL,
+    `teacher_answer` BIT NULL,
     PRIMARY KEY (`id`)
+    FOREIGN KEY (`class_id`) REFERENCES class(`id`)
 ) ENGINE = InnoDB
 
 CREATE TABLE IF NOT EXISTS `mydb`.`users` (
@@ -23,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`users` (
     `name` VARCHAR (50) CHARACTER SET 'utf8' NOT NULL,
     `email` VARCHAR (100) CHARACTER SET 'utf8' NOT NULL,
     `password` CHAR (44) NOT NULL,
-    `type` CHAR (1) NOT NULL
+    `type` INT NOT NULL
     PRIMARY KEY (`id`)
     UNIQUE (`email`)
 ) ENGINE = InnoDB
@@ -35,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`answer` (
     `user_id` INT NULL,
     `content` TEXT(65535) NULL,
     PRIMARY KEY (`id`)
+    FOREIGN KEY (`question_id`) REFERENCES question (id)
 ) ENGINE = InnoDB
 
 CREATE TABLE IF NOT EXISTS `mydb`.`class` (

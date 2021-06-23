@@ -6,15 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
-interface ResultSetHandler<T> {
-    public T f(ResultSet rs) throws SQLException;
+interface IPrepareStmtHandler {
+    void f(PreparedStatement p) throws SQLException;
 }
-
 
 public class DbAccessor {
     private DbAccessor() {}
@@ -41,7 +37,7 @@ public class DbAccessor {
         return ds;
     }
 
-    public static<T> T getData(String query, ResultSetHandler<T> func)
+    public static<T> T getData(String query, IResultSetHandler<T> func)
             throws SQLException {
         try (Connection c = getDs().getConnection()) {
             try (Statement stmt = c.createStatement()) {
@@ -56,6 +52,15 @@ public class DbAccessor {
         try (Connection c = getDs().getConnection()) {
             try (Statement stmt = c.createStatement()) {
                 stmt.executeUpdate(query);
+            }
+        }
+    }
+
+    public static void execPrepare(String query, IPrepareStmtHandler p) throws SQLException {
+        try (Connection c = getDs().getConnection()) {
+            try (PreparedStatement stmt = c.prepareStatement(query)) {
+                p.f(stmt);
+                stmt.executeUpdate();
             }
         }
     }

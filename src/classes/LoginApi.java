@@ -37,9 +37,9 @@ public class LoginApi extends HttpServlet {
         String email = Utils.partToString(request.getPart("email"));
         String pass = Utils.partToString(request.getPart("password"));
         try {
-            long token = User.signIn(email, pass, true);
+            UserCtrl.signIn(email, pass, true);
             HttpSession c = request.getSession();
-            c.setAttribute("token", token);
+            c.setAttribute("email", email);
             Gson gson = new Gson();
             PrintWriter out = response.getWriter();
             out.println(gson.toJson(new LoginResult(true, "")));

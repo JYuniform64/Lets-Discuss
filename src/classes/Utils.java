@@ -8,6 +8,7 @@ import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 public class Utils {
@@ -26,5 +27,9 @@ public class Utils {
         IOUtils.copy(p.getInputStream(), writer, StandardCharsets.UTF_8);
         String theString = writer.toString();
         return theString;
+    }
+
+    public static int makeId() {
+        return new SecureRandom().nextInt();
     }
 }
