@@ -1,8 +1,22 @@
 <%-- This jsp file is used for loadding question list of 'Q&A' page. --%>
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
+
+<%
+    request.setCharacterEncoding("utf-8");
+    if (request.getParameter("classid") == null)
+        response.sendRedirect("index.jsp");
+    String classid = request.getParameter("classid");
+%>
+
 <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white">
     <div class="d-flex flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
         <span class="fs-5 fw-semibold flex-grow-1">Questions</span>
-        <button class="btn btn-primary" type="submit">Ask</button>
+        <button id="ask_btn" class="btn btn-primary" type="submit">Ask</button>
+        <script>
+            document.getElementById("ask_btn").addEventListener("click", function () {
+                $('#main').load('edit_question.jsp?classid=<%=classid%>');
+            })
+        </script>
     </div>
     <div class="list-group list-group-flush border-bottom scrollarea">
         <a href="#" class="list-group-item list-group-item-action py-2 lh-tight" style="height: 100px;">

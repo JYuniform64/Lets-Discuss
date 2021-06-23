@@ -1,3 +1,12 @@
+<%@ page language="java" import="java.util.*" contentType="text/html; charset=utf-8"%>
+
+<%
+    request.setCharacterEncoding("utf-8");
+    if (request.getParameter("classid") == null)
+        response.sendRedirect("index.jsp");
+    String classid = request.getParameter("classid");
+%>
+
 <!DOCTYPE html>
 <html>
 
@@ -56,7 +65,7 @@
 <script>
     $(document).ready(function () {
         $('#navbar').load('navbar.jsp');
-        $('#siderbar').load('question_list.jsp');
+        $('#siderbar').load('question_list.jsp?classid=<%=classid%>');
 
         if (textarea.addEventListener) {
             textarea.addEventListener('keydown', keyHandler, false);
@@ -102,7 +111,6 @@
             <!-- siderbar: AJAX loaded(question_list.jsp). -->
             <div id="siderbar" class="col-md-3 sidebar-wrapper">
             </div>
-            <!-- TODO: detailed question and answers -->
             <div id="main" class="row col-md-9" style="position: absolute; left:25%; width:76%; margin-top: 1em; top: 52px;">
             </div>
         </div>
