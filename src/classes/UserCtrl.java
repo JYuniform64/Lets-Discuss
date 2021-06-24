@@ -1,21 +1,41 @@
 package com.group.jsp;
 
+import javax.servlet.http.HttpSession;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
 public class UserCtrl {
+    final static String emailStr = "email";
+
     private UserCtrl() {
     }
 
+    public static boolean isSignIn(HttpSession session) throws SQLException {
+        String email = (String) session.getAttribute(emailStr);
+        if (email == null) {
+            return false;
+        }
+        else {
+            return DbInstance.emailExist(email);
+        }
+    }
+
+    public static String getEmail(HttpSession session) {
+        return (String) session.getAttribute(emailStr);
+    }
+
+    public static void logOut(HttpSession session) {
+        session.setAttribute(emailStr, null);
+    }
     // Sign-in.
     // Return token
-    public static void signIn(String email_or_username, String password, boolean is_email)
+    public static void signIn(HttpSession session, String email, String password)
             throws SQLException, IllegalArgumentException
     {
         String passDigest = Utils.encode(password);
         String where = "where " +
-                String.format((is_email) ? "email = '%s'" : "username = '%s'", email_or_username) +
+                String.format("email = '%s'", email) +
                 " AND " +
                 String.format("password = '%s'", passDigest);
         boolean now = DbAccessor.getData("select * from users " + where,
@@ -23,6 +43,7 @@ public class UserCtrl {
         if (!now) {
             throw new IllegalArgumentException("incorrect username or password");
         }
+        session.setAttribute("email", email);
     }
 
     // Register a user.

@@ -2,6 +2,7 @@ package com.group.jsp;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class DbInstance {
     /******************** Authentication***************************/
@@ -11,8 +12,10 @@ public class DbInstance {
     }
 
     // Get username corresponds to a certain uid.
-    public static String getUsername(long uid) {
-        return "";
+    public static String getUsername(int uid) throws SQLException{
+        /* Might be buggy! Due to id conversion from INT to STRING */
+        String select = String.format("SELECT * FROM users WHERE id = " + uid);
+        /* TODO */
     }
 
     // Get uid by a **valid** email.
@@ -33,60 +36,26 @@ public class DbInstance {
     }
 
     // Judge whether a email already exists.
-    // Should be used in **SignUp**.
-    public static boolean emailExist(String email) {
-        return false;
+    // Should be used in **SignUp**, **isSignIn**.
+    public static boolean emailExist(String email) throws SQLException {
+        String query = String.format("SELECT * FROM users WHERE email = '%s'", email);
+        return DbAccessor.getData(query, ResultSet::next);
     }
 
-    private static<T> IResultSetHandler<T> nullRet(IResultSetHandler<T> f) throws SQLException {
-         return rs -> {
+    private static <T> IResultSetHandler<T> nullRet(IResultSetHandler<T> f) throws SQLException {
+        return rs -> {
             if (rs.next()) {
                 return f.f(rs);
-            }
-            else {
+            } else {
                 return null;
             }
-         };
+        };
     }
 
     public static Question getQuestionById(int id) throws SQLException {
         String select =
                 String.format("SELECT * FROM question where id = '%d'", id);
-        return DbAccessor.getData(select,
-                nullRet((rs) -> new Question(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        Question.parseTags(rs.getString(5)),
-                        Question.parseType(rs.getInt(6)),
-                        rs.getDate(7),
-                        rs.getDate(8),
-                        rs.getInt(9),
-                        rs.getInt(10),
-                        rs.getInt(11),
-                        rs.getBoolean(12),
-                        rs.getBoolean(13))));
-    }
-
-    public static List<Question> getQuestionListByClassId(int id) throws SQLException {
-        String select =
-                String.format("SELECT * FROM question where class_id = '%d'", id);
-        return DbAccessor.getDataList(select,
-                nullRet((rs) -> new Question(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getString(3),
-                        rs.getString(4),
-                        Question.parseTags(rs.getString(5)),
-                        Question.parseType(rs.getInt(6)),
-                        rs.getDate(7),
-                        rs.getDate(8),
-                        rs.getInt(9),
-                        rs.getInt(10),
-                        rs.getInt(11),
-                        rs.getBoolean(12),
-                        rs.getBoolean(13))));
+        return DbAccessor.getData(select, DbInstance::getQuestionByRs);
     }
 
     public static Answer getAnswerById(int id) throws SQLException {
@@ -101,15 +70,10 @@ public class DbInstance {
                         rs.getString(5))));
     }
 
-    public static List<Answer> getAnswerListByQuestionId(int id) throws SQLException {
-        String select = String.format("SELECT * FROM answer WHERE question_id = %s", id);
-        return DbAccessor.getDataList(select,
-                nullRet((rs) -> new Answer(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getDate(3),
-                        rs.getInt(4),
-                        rs.getString(5))));
+    public static List<Question> getQuestionListByClassId(int id) throws SQLException {
+        String select =
+                String.format("SELECT * FROM question where class_id = '%d'", id);
+        return DbAccessor.getDataList(select, nullRet(DbInstance::getQuestionByRs));
     }
 
     public static Class getClassById(int id) throws SQLException {
@@ -125,17 +89,15 @@ public class DbInstance {
                         rs.getInt(6))));
     }
 
+
     public static User getUserById(int id) throws SQLException {
-        String select =
-                String.format("SELECT * FROM user WHERE id = %s", id);
-        return DbAccessor.getData(select,
-                nullRet(rs ->
-                    new User(
-                            rs.getInt(1),
-                            rs.getString(2),
-                            rs.getString(3),
-                            rs.getString(4),
-                            User.parseTypes(rs.getInt(5)))));
+        String select = String.format("SELECT * FROM user WHERE id = %s", id);
+        return DbAccessor.getData(select, nullRet(DbInstance::getUserByRs));
+    }
+
+    public static User getUserByEmail(String email) throws SQLException {
+        String select = String.format("SELECT * FROM user WHERE id = '%s'", email);
+        return DbAccessor.getData(select, nullRet(DbInstance::getUserByRs));
     }
 
     public static void insertUser(User u) throws SQLException {
@@ -193,5 +155,31 @@ public class DbInstance {
                     p.setDate(5, new java.sql.Date(c.date_end.getTime()));
                     p.setInt(6, c.teacher_id);
                 });
+    }
+
+    private static Question getQuestionByRs(ResultSet rs) throws SQLException {
+        return new Question(
+                rs.getInt(1),
+                rs.getInt(2),
+                rs.getString(3),
+                rs.getString(4),
+                Question.parseTags(rs.getString(5)),
+                Question.parseType(rs.getInt(6)),
+                rs.getDate(7),
+                rs.getDate(8),
+                rs.getInt(9),
+                rs.getInt(10),
+                rs.getInt(11),
+                rs.getBoolean(12),
+                rs.getBoolean(13));
+    }
+
+    private static User getUserByRs(ResultSet rs) throws SQLException {
+        return new User(
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getString(4),
+                User.parseTypes(rs.getInt(5)));
     }
 }

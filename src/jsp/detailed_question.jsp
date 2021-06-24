@@ -1,36 +1,51 @@
 <%-- This jsp file is used for loadding a specified question and its corresponding answers of 'Q&A' page. --%>
+<%@ page language="java" import="java.util.*, java.text.SimpleDateFormat, com.group.jsp.*" contentType="text/html; charset=utf-8"%>
+<%@ page import="java.sql.SQLException" %>
+<%
+    request.setCharacterEncoding("utf-8");
+    if (request.getParameter("qid") == null)
+        response.sendRedirect("index.jsp");
+    String qid = request.getParameter("qid");
+    try {
+        Question question = DbInstance.getQuestionById(Integer.parseInt(qid));
+        List<Answer> answer_list = DbInstance.getAnswerListByQuestionId(question.id);
+    } catch(SQLException e){
+        response.sendRedirect("index.jsp");
+    }
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+%>
+
 <div id="question" class="row">
     <div class="d-flex">
         <div id="question_title" class="p-2 flex-grow-1">
-            <h2>What is 'Let's Discuss'?</h2>
+            <h2><%=question.title%></h2>
         </div>
         <div id="write_answer" class="p-2">
             <input class="btn btn-primary" type="button" value="Write Answer">
         </div>
     </div>
     <div id="question_info" class="small">
-        <span id="question_create_date">Question Created: 6/19/21</span>
-        <span id="question_edit_date">Modified: 6/21/21</span>
-        <span id="question_view">View: 666</span>
+        <span id="question_create_date">Question Created: <%=simpleDateFormat.format(question.create_date)%></span>
+        <span id="question_edit_date">Modified: <%=simpleDateFormat.format(question.modified_date)%></span>
+        <span id="question_view">View: <%=simpleDateFormat.format(question.modified_date)%></span>
     </div>
     <br><br>
     <hr />
     <div class="col-md-1">
-        <div class="upvotejs" id="u0">
+        <div class="upvotejs" id="q<%=question.id%>">
             <a class="upvote" title="This is good stuff. Vote it up! (Click again to undo)"></a>
-            <span class="count" title="Total number of votes">1</span>
-            <a class="downvote downvote-on"
+            <span class="count" title="Total number of votes"><%=question.good_question_count%></span>
+            <a class="downvote"
                 title="This is not useful. Vote it down. (Click again to undo)"></a>
             <a class="star" title="Mark as favorite. (Click again to undo)"></a>
         </div>
-        <script>Upvote.create('u0', { count: 5, upvoted: true });</script>
+        <script>Upvote.create('q<%=question.id%>');</script>
         <!-- Shit... It cannot work properly. Wait for further debugging. Reference: https://github.com/janosgyerik/upvotejs -->
     </div>
     <div class="col-md-11">
-        <div id="question_content">
-            <pre><code class="language-c hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
-            </code></pre>
-            <p>This is something else.</p>
+        <div class="render">
+            <%--might be buggy.--%>
+            <%=question.content%>
         </div>
     </div>
 </div>
@@ -39,25 +54,21 @@
     <h2>Answers</h2>
     <br>
 </div>
+<% for (Answer answer: answer_list) {%>
 <div id="answers_id" class="row">
     <div class="col-md-1">
-        <div class="upvotejs" id="u0">
+        <div class="upvotejs" id="a<%=answer.id%>">
             <a class="upvote" title="This is good stuff. Vote it up! (Click again to undo)"></a>
             <span class="count" title="Total number of votes">1</span>
-            <a class="downvote downvote-on"
+            <a class="downvote"
                 title="This is not useful. Vote it down. (Click again to undo)"></a>
         </div>
-        <script>Upvote.create('u0', { count: 5, upvoted: true });</script>
+        <script>Upvote.create('a<%=answer.id%>');</script>
     </div>
     <div class="col-md-11">
-        <div id="question_content">
-            <h2>This is a paragraph</h2>
-            <ul>
-                <li>This is a code block</li>
-            </ul>
-            <pre><code class="language-c hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
-            </code></pre>
-            <p>This is something else.</p>
+        <div class="render">
+            <%--might be buggy.--%>
+            <%=answer.content%>
         </div>
         <br>
         <div id="answer_info" class="d-flex">
@@ -65,73 +76,29 @@
                 <a href="#">comment</a>
             </div>
             <div class="p-2">
-                Answered by: <a id="username" href="#">anonymous</a>
+                Answered by: <a id="username" href="#"><%=DbInstance.getUserById(answer.user_id)%></a>
             </div>
         </div>
         <hr>
     </div>
 </div>
-<div id="answers_id" class="row">
-    <div class="col-md-1">
-        <div class="upvotejs" id="u0">
-            <a class="upvote" title="This is good stuff. Vote it up! (Click again to undo)"></a>
-            <span class="count" title="Total number of votes">1</span>
-            <a class="downvote downvote-on"
-                title="This is not useful. Vote it down. (Click again to undo)"></a>
-        </div>
-        <script>Upvote.create('u0', { count: 5, upvoted: true });</script>
-    </div>
-    <div class="col-md-11">
-        <div id="question_content">
-            <h2>This is a paragraph</h2>
-            <ul>
-                <li>This is a code block</li>
-            </ul>
-            <pre><code class="language-c hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
-            </code></pre>
-            <p>This is something else.</p>
-        </div>
-        <br>
-        <div id="answer_info" class="d-flex">
-            <div class="p-2 flex-grow-1">
-                <a href="#">comment</a>
-            </div>
-            <div class="p-2">
-                Answered by: <a id="username" href="#">anonymous</a>
-            </div>
-        </div>
-        <hr>
-    </div>
-</div>
-<div id="answers_id" class="row">
-    <div class="col-md-1">
-        <div class="upvotejs" id="u0">
-            <a class="upvote" title="This is good stuff. Vote it up! (Click again to undo)"></a>
-            <span class="count" title="Total number of votes">1</span>
-            <a class="downvote downvote-on"
-                title="This is not useful. Vote it down. (Click again to undo)"></a>
-        </div>
-        <script>Upvote.create('u0', { count: 5, upvoted: true });</script>
-    </div>
-    <div class="col-md-11">
-        <div id="question_content">
-            <h2>This is a paragraph</h2>
-            <ul>
-                <li>This is a code block</li>
-            </ul>
-            <pre><code class="language-c hljs"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
-            </code></pre>
-            <p>This is something else.</p>
-        </div>
-        <br>
-        <div id="answer_info" class="d-flex">
-            <div class="p-2 flex-grow-1">
-                <a href="#">comment</a>
-            </div>
-            <div class="p-2">
-                Answered by: <a id="username" href="#">anonymous</a>
-            </div>
-        </div>
-        <hr>
-    </div>
-</div>
+<%}%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"
+        integrity="sha512-W7EehcwtSbRF63FIQlXEOOd5mnq0Et0V0nUOvwcUvjnCKgOLLYbqriQxEQSp63sfrkryxIg/A/O8v8O18QwQCQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/a11y-dark.min.css"
+      integrity="sha512-Vj6gPCk8EZlqnoveEyuGyYaWZ1+jyjMPg8g4shwyyNlRQl6d3L9At02ZHQr5K6s5duZl/+YKMnM3/8pDhoUphg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="https://cdn.jsdelivr.net/npm/markdown-it-latex2img@latest/dist/markdown-it-latex2img.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/dist/markdown-it.min.js"
+        crossorigin="anonymous"></script>
+<script>
+    var md = window.markdownit();
+    md.use(window.markdownitLatex2img);
+    var blocks = document.getElementsByClassName('render');
+    [].forEach.call(blocks, function (block) {
+        block.innerHTML = md.render(block.innerText);
+    });
+    hljs.highlightAll();
+</script>

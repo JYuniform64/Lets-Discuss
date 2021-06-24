@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -27,6 +26,13 @@ class LoginResult {
 public class LoginApi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String method = request.getParameter("method");
+        if (method != null) {
+            if (method.equals("logout")) {
+                UserCtrl.logOut(request.getSession());
+                response.sendRedirect("index.html");
+            }
+        }
     }
 
     @Override
@@ -37,9 +43,7 @@ public class LoginApi extends HttpServlet {
         String email = Utils.partToString(request.getPart("email"));
         String pass = Utils.partToString(request.getPart("password"));
         try {
-            UserCtrl.signIn(email, pass, true);
-            HttpSession c = request.getSession();
-            c.setAttribute("email", email);
+            UserCtrl.signIn(request.getSession(), email, pass);
             Gson gson = new Gson();
             PrintWriter out = response.getWriter();
             out.println(gson.toJson(new LoginResult(true, "")));

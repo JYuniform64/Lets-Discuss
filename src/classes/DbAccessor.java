@@ -8,14 +8,18 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 interface IPrepareStmtHandler {
     void f(PreparedStatement p) throws SQLException;
 }
 
 public class DbAccessor {
-    private DbAccessor() {}
+    private DbAccessor() {
+    }
+
     public static DataSource ds;
+
     static {
         try {
             HikariConfig config = new HikariConfig();
@@ -27,18 +31,18 @@ public class DbAccessor {
             config.addDataSourceProperty("idleTimeout", "60000");
             config.addDataSourceProperty("maximumPoolSize", "20");
             ds = new HikariDataSource(config);
-        }
-        catch (Throwable t) {
+        } catch (Throwable t) {
             Logger logger = LoggerFactory.getLogger(DbAccessor.class);
             logger.error("error:", t);
             throw t;
         }
     }
+
     public static DataSource getDs() {
         return ds;
     }
 
-    public static<T> T getData(String query, IResultSetHandler<T> func)
+    public static <T> T getData(String query, IResultSetHandler<T> func)
             throws SQLException {
         try (Connection c = getDs().getConnection()) {
             try (Statement stmt = c.createStatement()) {
@@ -49,19 +53,15 @@ public class DbAccessor {
         }
     }
 
-    public static<T> List<T> getDataList(String query, IResultSetHandler<T> func)
+    public static <T> List<T> getDataList(String query, IResultSetHandler<T> func)
             throws SQLException {
-        try (Connection c = getDs().getConnection()) {
-            try (Statement stmt = c.createStatement()) {
-                try (ResultSet rs = stmt.executeQuery(query)) {
-                    List<T> list = new ArrayList<>();
-                    while (rs.next()) {
-                        list.add(func.f(rs));
-                    }
-                    return list;
-                }
+        return getData(query, rs -> {
+            List<T> list = new ArrayList<>();
+            while (rs.next()) {
+                list.add(func.f(rs));
             }
-        }
+            return list;
+        });
     }
 
     public static void exec(String query) throws SQLException {
