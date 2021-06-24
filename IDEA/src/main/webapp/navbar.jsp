@@ -1,3 +1,4 @@
+<%@ page import="com.group.jsp.UserCtrl" %>
 <!-- Nav bar. Ajax loaded into every page. -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -33,6 +34,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
     </div>
+    <%if (UserCtrl.isSignIn(request.getSession())) {%>
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <a class="navbar-brand" href="#">
@@ -46,10 +48,15 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">personal space</a>
                     <a class="dropdown-item" href="#">setting</a>
-                    <a class="dropdown-item" href="#">log out</a>
+                    <a class="dropdown-item" href="/LoginApi?method=logout">log out</a>
                 </div>
                 <!-- end -->
             </li>
         </ul>
     </div>
+    <%} else {%>
+    <div class="w-100 order-3 mr-1">
+        <a class="nav-link ml-auto" href="login.html" style="width: 100px">Login</a>
+    </div>
+    <%}%>
 </nav>

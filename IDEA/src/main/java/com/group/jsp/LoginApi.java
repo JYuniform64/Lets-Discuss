@@ -26,6 +26,13 @@ class LoginResult {
 public class LoginApi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String method = request.getParameter("method");
+        if (method != null) {
+            if (method.equals("logout")) {
+                UserCtrl.logOut(request.getSession());
+                response.sendRedirect("index.html");
+            }
+        }
     }
 
     @Override

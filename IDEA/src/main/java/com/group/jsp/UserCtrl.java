@@ -6,11 +6,13 @@ import java.sql.SQLException;
 
 
 public class UserCtrl {
+    final static String emailStr = "email";
+
     private UserCtrl() {
     }
 
     public static boolean isSignIn(HttpSession session) throws SQLException {
-        String email = (String) session.getAttribute("email");
+        String email = (String) session.getAttribute(emailStr);
         if (email == null) {
             return false;
         }
@@ -19,6 +21,13 @@ public class UserCtrl {
         }
     }
 
+    public static String getEmail(HttpSession session) {
+        return (String) session.getAttribute(emailStr);
+    }
+
+    public static void logOut(HttpSession session) {
+        session.setAttribute(emailStr, null);
+    }
     // Sign-in.
     // Return token
     public static void signIn(HttpSession session, String email, String password)
