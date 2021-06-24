@@ -1,6 +1,7 @@
 package com.group.jsp;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class DbInstance {
     /******************** Authentication***************************/
@@ -68,10 +69,41 @@ public class DbInstance {
                         rs.getBoolean(13))));
     }
 
+    public static List<Question> getQuestionListByClassId(int id) throws SQLException {
+        String select =
+                String.format("SELECT * FROM question where class_id = '%d'", id);
+        return DbAccessor.getDataList(select,
+                nullRet((rs) -> new Question(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        Question.parseTags(rs.getString(5)),
+                        Question.parseType(rs.getInt(6)),
+                        rs.getDate(7),
+                        rs.getDate(8),
+                        rs.getInt(9),
+                        rs.getInt(10),
+                        rs.getInt(11),
+                        rs.getBoolean(12),
+                        rs.getBoolean(13))));
+    }
+
     public static Answer getAnswerById(int id) throws SQLException {
         String select =
                 String.format("SELECT * FROM answer where id = %s", id);
         return DbAccessor.getData(select,
+                nullRet((rs) -> new Answer(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getDate(3),
+                        rs.getInt(4),
+                        rs.getString(5))));
+    }
+
+    public static List<Answer> getAnswerListByQuestionId(int id) throws SQLException {
+        String select = String.format("SELECT * FROM answer WHERE question_id = %s", id);
+        return DbAccessor.getDataList(select,
                 nullRet((rs) -> new Answer(
                         rs.getInt(1),
                         rs.getInt(2),

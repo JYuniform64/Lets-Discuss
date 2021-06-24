@@ -22,7 +22,15 @@
     <div id="show"
         style="margin: 2em 10px; border: 1px black solid; border-radius: 5px; height: 15em; overflow-y: scroll;">
     </div>
-    <button id="submit_btn" class="btn btn-primary col-2 float-right" type="submit">Submit Question</button>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="question_type" id="inlineRadio1" value="question">
+    <label class="form-check-label" for="inlineRadio1">question</label>
+    </div>
+    <div class="form-check form-check-inline">
+    <input class="form-check-input" type="radio" name="question_type" id="inlineRadio2" value="post">
+    <label class="form-check-label" for="inlineRadio2">post</label>
+    </div>
+    <button id="submit_btn" class="btn btn-primary col-2 float-right" type="submit">Submit</button>
     <script>
         const textarea = document.getElementById('edit');
         textarea.addEventListener('keyup', rendermd);
