@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.ArrayList;
 
 interface IPrepareStmtHandler {
     void f(PreparedStatement p) throws SQLException;
@@ -43,6 +44,21 @@ public class DbAccessor {
             try (Statement stmt = c.createStatement()) {
                 try (ResultSet rs = stmt.executeQuery(query)) {
                     return func.f(rs);
+                }
+            }
+        }
+    }
+
+    public static<T> List<T> getDataList(String query, IResultSetHandler<T> func)
+            throws SQLException {
+        try (Connection c = getDs().getConnection()) {
+            try (Statement stmt = c.createStatement()) {
+                try (ResultSet rs = stmt.executeQuery(query)) {
+                    List<T> list = new ArrayList<>();
+                    while (rs.next()) {
+                        list.add(func.f(rs));
+                    }
+                    return list;
                 }
             }
         }
