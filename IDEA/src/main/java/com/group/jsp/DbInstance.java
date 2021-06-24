@@ -1,5 +1,6 @@
 package com.group.jsp;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DbInstance {
@@ -27,14 +28,15 @@ public class DbInstance {
 
     // Judge whether a username already exists.
     // Should be used in **SignUp**.
-    public boolean usernameExist(String username) {
+    public static boolean usernameExist(String username) {
         return false;
     }
 
     // Judge whether a email already exists.
-    // Should be used in **SignUp**.
-    public static boolean emailExist(String email) {
-        return false;
+    // Should be used in **SignUp**, **isSignIn**.
+    public static boolean emailExist(String email) throws SQLException {
+        String query = String.format("SELECT * FROM users WHERE email = '%s'", email);
+        return DbAccessor.getData(query, ResultSet::next);
     }
 
     private static<T> IResultSetHandler<T> nullRet(IResultSetHandler<T> f) throws SQLException {
