@@ -25,6 +25,12 @@ public class UserCtrl {
         return (String) session.getAttribute(emailStr);
     }
 
+    public static int getUid(HttpSession session) throws SQLException {
+        String email = getEmail(session);
+        User u = DbInstance.getUserByEmail(email);
+        return u.id;
+    }
+
     public static void logOut(HttpSession session) {
         session.setAttribute(emailStr, null);
     }

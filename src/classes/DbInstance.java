@@ -1,7 +1,7 @@
 package com.group.jsp;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class DbInstance {
@@ -24,7 +24,7 @@ public class DbInstance {
 
     // Judge whether a username already exists.
     // Should be used in **SignUp**.
-    public boolean usernameExist(String username) {
+    public static boolean usernameExist(String username) {
         return false;
     }
 
@@ -53,20 +53,25 @@ public class DbInstance {
 
     public static Answer getAnswerById(int id) throws SQLException {
         String select =
-                String.format("SELECT * FROM answer where id = %s", id);
-        return DbAccessor.getData(select,
-                nullRet((rs) -> new Answer(
-                        rs.getInt(1),
-                        rs.getInt(2),
-                        rs.getDate(3),
-                        rs.getInt(4),
-                        rs.getString(5))));
+                String.format("SELECT * FROM answer where id = '%d'", id);
+        return DbAccessor.getData(select, nullRet(DbInstance::getAnswerByRs));
+    }
+
+    public static List<Answer> getAnswerByClassId(int id) throws SQLException {
+        String select =
+                String.format("SELECT * FROM answer where class_id = '%d'", id);
+        return DbAccessor.getDataList(select, DbInstance::getAnswerByRs);
     }
 
     public static List<Question> getQuestionListByClassId(int id) throws SQLException {
         String select =
-                String.format("SELECT * FROM question where class_id = '%d' ORDER BY DATE(modified_date) DESC", id);
+                String.format("SELECT * FROM question where class_id = '%d'", id);
         return DbAccessor.getDataList(select, nullRet(DbInstance::getQuestionByRs));
+    }
+
+    public static List<Question> getTop10Question() throws SQLException {
+        String select = "SELECT * FROM question ORDER BY response_count DESC LIMIT 10";
+        return DbAccessor.getDataList(select, DbInstance::getQuestionByRs);
     }
 
     public static Class getClassById(int id) throws SQLException {
@@ -81,7 +86,6 @@ public class DbInstance {
                         rs.getDate(5),
                         rs.getInt(6))));
     }
-
 
     public static User getUserById(int id) throws SQLException {
         String select = String.format("SELECT * FROM user WHERE id = %s", id);
@@ -174,5 +178,14 @@ public class DbInstance {
                 rs.getString(3),
                 rs.getString(4),
                 User.parseTypes(rs.getInt(5)));
+    }
+
+    private static Answer getAnswerByRs(ResultSet rs) throws SQLException {
+        return new Answer(
+                rs.getInt(1),
+                rs.getInt(2),
+                rs.getDate(3),
+                rs.getInt(4),
+                rs.getString(5));
     }
 }
