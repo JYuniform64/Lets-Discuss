@@ -47,7 +47,7 @@
     <div class="m-auto w-50 mt-3">
         <div class="list-group">
             <%for (UploadFile i:fileList){%>
-                <a href=<%=i.url%> class="list-group-item list-group-item-action active">
+                <a href="<%=i.url%>" class="list-group-item list-group-item-action active">
                     <%=i.name%>
                 </a>
             <%}%>
