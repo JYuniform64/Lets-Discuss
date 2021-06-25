@@ -162,6 +162,33 @@ public class DbInstance {
         DbAccessor.execPrepare(update, p -> { p.setInt(1, questionId); });
     }
 
+    public static UploadFile getUploadFileById(int id) throws SQLException {
+        String select = String.format("SELECT * FROM file WHERE id = %d", id);
+        return DbAccessor.getData(select, nullRet(DbInstance::getUploadFileByRs));
+    }
+
+    public static List<UploadFile> getUploadFileList() throws SQLException {
+        String select = "SELECT * FROM file";
+        return DbAccessor.getDataList(select, DbInstance::getUploadFileByRs);
+    }
+
+    public static void insertUploadFile(UploadFile f) throws SQLException {
+        String insert = "INSERT INTO file VALUES(?, ?, ?)";
+        DbAccessor.execPrepare(insert, p -> {
+            p.setInt(1, f.id);
+            p.setString(2, f.url);
+            p.setString(3, f.name);
+        });
+    }
+
+    public static int newSafeFileId() throws SQLException {
+        int rnd;
+        do {
+            rnd = Utils.makeId();
+        } while ( getUploadFileById(rnd) != null );
+        return rnd;
+    }
+
     private static Question getQuestionByRs(ResultSet rs) throws SQLException {
         return new Question(
                 rs.getInt(1),
@@ -205,5 +232,13 @@ public class DbInstance {
                 rs.getDate(4),
                 rs.getDate(5),
                 rs.getInt(6));
+    }
+
+    private static UploadFile getUploadFileByRs(ResultSet rs) throws SQLException {
+        return new UploadFile(
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3)
+        );
     }
 }

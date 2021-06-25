@@ -50,6 +50,14 @@ CREATE TABLE IF NOT EXISTS `mydb`.`answer` (
                                                FOREIGN KEY (`question_id`) REFERENCES question (id)
 ) ENGINE = InnoDB;
 
+CREATE TABLE IF NOT EXISTS `mydb`.`file` (
+    `id` INT NOT NULL,
+    `url` VARCHAR(200) NOT NULL,
+    `name` VARCHAR(200) NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE (`url`)
+);
+
 INSERT INTO users VALUE (1232312, 'LI', 'aa@g.com', 'T58QswTP6bKxH8sTh/aU4Y8I6jWMfp9WdDTTrWy9f8Q=', 1);
 INSERT INTO users VALUE (12312, 'LIM', 'a@g.com', 'T58QswTP6bKxH8sTh/aU4Y8I6jWMfp9WdDTTrWy9f8Q=', 0);
 INSERT INTO class VALUE (12313, 'MYCLASS', 'SOMETHING', '2020-01-02', '2020-01-03', 12312);

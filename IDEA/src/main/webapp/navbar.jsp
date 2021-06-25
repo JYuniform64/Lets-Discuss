@@ -39,7 +39,7 @@
                 <a class="nav-link" href=<%="QApage.jsp?classid=" + classId%>>Q&A</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Resource</a>
+                <a class="nav-link" href="./resource.jsp">Resource</a>
             </li>
         </ul>
     </div>
