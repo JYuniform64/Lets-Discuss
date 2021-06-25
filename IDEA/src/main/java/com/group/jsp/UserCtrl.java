@@ -25,8 +25,13 @@ public class UserCtrl {
         return (String) session.getAttribute(emailStr);
     }
 
-    public static int getUid(HttpSession session) throws SQLException {
+    public static int getUid(HttpSession session)
+            throws SQLException, IllegalArgumentException
+    {
         String email = getEmail(session);
+        if (email == null) {
+            throw new IllegalArgumentException("not login");
+        }
         User u = DbInstance.getUserByEmail(email);
         return u.id;
     }

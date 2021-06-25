@@ -77,14 +77,12 @@ public class DbInstance {
     public static Class getClassById(int id) throws SQLException {
         String select =
                 String.format("SELECT * FROM class WHERE id = %s", id);
-        return DbAccessor.getData(select,
-                nullRet((rs) -> new Class(
-                        rs.getInt(1),
-                        rs.getString(2),
-                        rs.getString(3),
-                        rs.getDate(4),
-                        rs.getDate(5),
-                        rs.getInt(6))));
+        return DbAccessor.getData(select, nullRet(DbInstance::getClassByRs));
+    }
+
+    public static List<Class> getClassList() throws SQLException {
+        String select = "SELECT * FROM class";
+        return DbAccessor.getDataList(select, DbInstance::getClassByRs);
     }
 
     public static User getUserById(int id) throws SQLException {
@@ -154,6 +152,16 @@ public class DbInstance {
                 });
     }
 
+    public static void add1ResponseCount(int questionId) throws SQLException {
+        String update = "UPDATE question SET response_count = response_count + 1 WHERE id = ?";
+        DbAccessor.execPrepare(update, p -> { p.setInt(1, questionId); });
+    }
+
+    public static void add1ViewCount(int questionId) throws SQLException {
+        String update = "UPDATE question SET view_count = view_count + 1 WHERE id = ?";
+        DbAccessor.execPrepare(update, p -> { p.setInt(1, questionId); });
+    }
+
     private static Question getQuestionByRs(ResultSet rs) throws SQLException {
         return new Question(
                 rs.getInt(1),
@@ -187,5 +195,15 @@ public class DbInstance {
                 rs.getDate(3),
                 rs.getInt(4),
                 rs.getString(5));
+    }
+
+    private static Class getClassByRs(ResultSet rs) throws SQLException {
+        return new Class(
+                rs.getInt(1),
+                rs.getString(2),
+                rs.getString(3),
+                rs.getDate(4),
+                rs.getDate(5),
+                rs.getInt(6));
     }
 }

@@ -20,6 +20,8 @@
         response.sendRedirect("index.jsp");
         return;
     }
+    DbInstance.add1ViewCount(question.id);
+    question.view_count += 1;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 %>
 
