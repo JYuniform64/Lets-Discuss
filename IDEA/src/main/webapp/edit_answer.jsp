@@ -16,12 +16,12 @@
 <div style="height: 4em;">
     <h2>Write Your Answer...</h2>
 </div>
-<form action="answer_handler.jsp?classid=<%=classid%>&qid=<%=qid%>" method="POST" enctype="multipart/form-data">
+<form action="answer_handler.jsp?classid=<%=classid%>&qid=<%=qid%>" method="POST" id="answer">
     <div class="input-group">
         <span class="input-group-text">Content</span>
         <textarea id="edit" class="form-control font-monospace"
             placeholder="Write the content of your answer here. Markdown supported." rows="15"
-            name="content"></textarea>
+            name="content" style="white-space: pre-wrap;"></textarea>
     </div>
     <div id="show"
         style="margin: 2em 10px; border: 1px black solid; border-radius: 5px; height: 15em; overflow-y: scroll;">
@@ -30,5 +30,14 @@
     <script>
         const textarea = document.getElementById('edit');
         textarea.addEventListener('keyup', rendermd);
+
+        function nl2br (str, is_xhtml) {
+            var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';
+            return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+        }
+        document.getElementById('submit_btn').onclick = function () {
+            document.getElementById('edit').value = nl2br(document.getElementById('edit').value, false);
+        }
+
     </script>
 </form>

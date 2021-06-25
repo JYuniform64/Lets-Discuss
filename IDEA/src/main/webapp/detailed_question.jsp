@@ -37,7 +37,7 @@
     <div id="question_info" class="small">
         <span id="question_create_date">Question Created: <%=simpleDateFormat.format(question.create_date)%></span>
         <span id="question_edit_date">Modified: <%=simpleDateFormat.format(question.modified_date)%></span>
-        <span id="question_view">View: <%= question.view_count %></span>
+        <span id="question_view">View: <%=question.view_count%></span>
     </div>
     <br><br>
     <hr />
