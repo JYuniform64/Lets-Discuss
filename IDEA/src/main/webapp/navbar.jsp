@@ -43,7 +43,7 @@
             </a>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
-                    <%= DbInstance.getUserById(UserCtrl.getUid(request.getSession())) %>>
+                    <%= DbInstance.getUserById(UserCtrl.getUid(request.getSession())).name %>>
                 </a>
                 <!-- further modification: show differently whether login -->
                 <div class="dropdown-menu">

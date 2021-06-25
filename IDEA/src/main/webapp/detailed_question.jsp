@@ -4,16 +4,21 @@
 
 <%
     request.setCharacterEncoding("utf-8");
-    if (request.getParameter("qid") == null)
+    if (request.getParameter("qid") == null) {
         response.sendRedirect("index.jsp");
+        return;
+    }
     String qid = request.getParameter("qid");
-    if (request.getParameter("classid") == null)
+    if (request.getParameter("classid") == null) {
         response.sendRedirect("index.jsp");
+        return;
+    }
     String classid = request.getParameter("classid");
     Question question = DbInstance.getQuestionById(Integer.parseInt(qid));
     List<Answer> answer_list = DbInstance.getAnswerListByQuestionId(question.id);
     if (question == null) {
         response.sendRedirect("index.jsp");
+        return;
     }
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd");
 %>
@@ -80,7 +85,7 @@
                 <a href="#">comment</a>
             </div>
             <div class="p-2">
-                Answered by: <a id="username" href="#"><%=DbInstance.getUserById(answer.user_id)%></a>
+                Answered by: <a id="username" href="#"><%=DbInstance.getUserById(answer.user_id).name%></a>
             </div>
         </div>
         <hr>
