@@ -140,9 +140,9 @@
                                 </div>
                                 <div class="col-2 p-0" style="height: 60px;">
                                     <%  if (question.type == Question.Types.POST) {%>
-                                    <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i>
-                                    <%  }else {%>
                                     <i class="fa fa-file-text fa-lg" aria-hidden="true"></i>
+                                    <%  }else {%>
+                                    <i class="fa fa-question-circle fa-lg" aria-hidden="true"></i>
                                     <%  }%>
                                     <span class="badge badge-secondary"><%=question.response_count%></span>
                                     <div>
