@@ -16,7 +16,7 @@
 <div style="height: 4em;">
     <h2>Write Your Answer...</h2>
 </div>
-<form action="answer_handler.jsp?classid=<%=classid%>&qid=<%=qid%>" method="POST">
+<form action="answer_handler.jsp?classid=<%=classid%>&qid=<%=qid%>" method="POST" enctype="multipart/form-data">
     <div class="input-group">
         <span class="input-group-text">Content</span>
         <textarea id="edit" class="form-control font-monospace"

@@ -1,5 +1,21 @@
 <%@ page import="com.group.jsp.UserCtrl" %>
 <%@ page import="com.group.jsp.DbInstance" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.group.jsp.Class" %>
+
+<%
+    List<Class> classes = DbInstance.getClassList();
+    String nowClass = request.getParameter("classid");
+    int classId = classes.get(0).id;
+    if (nowClass != null) {
+        classId = Integer.parseInt(nowClass);
+        Class c = DbInstance.getClassById(classId);
+        if (c == null) {
+            classId = classes.get(0).id;
+        }
+    }
+%>
+
 <!-- Nav bar. Ajax loaded into every page. -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -10,11 +26,9 @@
                 </a>
                 <!-- further modification: dynamic generate classes user attended -->
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Class 1</a>
-                    <a class="dropdown-item" href="#">Class 2</a>
-                    <a class="dropdown-item" href="#">Class 3</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">More</a>
+                    <%for (Class i : classes) {%>
+                    <a class="dropdown-item" href="#"><%= i.name %></a>
+                    <%}%>
                 </div>
                 <!-- end -->
             </li>
@@ -22,7 +36,7 @@
                 <a class="nav-link" href="#">Class info</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Q&A</a>
+                <a class="nav-link" href=<%="QApage.jsp?classid=" + classId%>>Q&A</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Resource</a>

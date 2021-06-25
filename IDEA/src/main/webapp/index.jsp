@@ -57,7 +57,8 @@
         <h2>Hot Questions</h2>
         <ul class="list-group">
             <%for (Question i: DbInstance.getTop10Question()) { %>
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+            <a href=<%= String.format("detailed_question.jsp?classid=%d&qid=%d", i.class_id, i.id) %>
+                       class="list-group-item list-group-item-action flex-column align-items-start">
                 <div class="d-flex justify-content-between">
                     <h5 class="mb-1"><%=i.title%></h5>
                     <small><%=i.create_date%></small>
