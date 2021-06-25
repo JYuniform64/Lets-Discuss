@@ -11,7 +11,7 @@
 <form action="question_handler.jsp?classid=<%=classid%>" method="POST">
     <div class="input-group mb-3">
         <span class="input-group-text" id="title">Title</span>
-        <input type="text" name="title" class="form-control" placeholder="Write the title of your question here." name="title">
+        <input type="text" name="title" class="form-control" placeholder="Write the title of your question here.">
     </div>
     <div class="input-group">
         <span class="input-group-text">Content</span>
@@ -34,5 +34,13 @@
     <script>
         const textarea = document.getElementById('edit');
         textarea.addEventListener('keyup', rendermd);
+
+        function nl2br (str, is_xhtml) {
+            var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';
+            return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+        }
+        document.getElementById('submit_btn').onclick = function () {
+            document.getElementById('edit').value = nl2br(document.getElementById('edit').value, false);
+        }
     </script>
 </form>
