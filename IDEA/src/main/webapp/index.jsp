@@ -33,6 +33,10 @@
             width: 100%;
             height: 100%;
         }
+
+        #HQ {
+            border: royalblue 3px solid;
+        }
     </style>
     <title>Let's Discuss</title>
 </head>
@@ -50,7 +54,7 @@
         <canvas id="bubble"></canvas>
     </div>
 
-    <div class="w-50 m-auto">
+    <div class="w-50 m-auto rounded px-4 py-3 mt-2" id="HQ">
         <h2>Hot Questions</h2>
         <ul class="list-group">
             <%for (Question i: DbInstance.getTop10Question()) { %>
