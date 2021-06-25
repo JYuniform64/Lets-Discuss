@@ -6,6 +6,9 @@
     if (request.getParameter("qid") == null)
         response.sendRedirect("index.jsp");
     String qid = request.getParameter("qid");
+    if (request.getParameter("classid") == null)
+        response.sendRedirect("index.jsp");
+    String classid = request.getParameter("classid");
     try {
         Question question = DbInstance.getQuestionById(Integer.parseInt(qid));
         List<Answer> answer_list = DbInstance.getAnswerListByQuestionId(question.id);
@@ -49,6 +52,7 @@
         </div>
     </div>
 </div>
+<div id="substitute">
 <div id="answer_header">
     <hr>
     <h2>Answers</h2>
@@ -83,6 +87,7 @@
     </div>
 </div>
 <%}%>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"
         integrity="sha512-W7EehcwtSbRF63FIQlXEOOd5mnq0Et0V0nUOvwcUvjnCKgOLLYbqriQxEQSp63sfrkryxIg/A/O8v8O18QwQCQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -101,4 +106,8 @@
         block.innerHTML = md.render(block.innerText);
     });
     hljs.highlightAll();
+
+    document.getElementById('write_answer').onclick = function() {
+        $('#substitute').load('edit_answer.jsp?classid=<%=classid%>&qid=<%=qid%>');
+    }
 </script>

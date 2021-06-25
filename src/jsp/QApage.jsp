@@ -130,7 +130,7 @@
                             for (Question question : question_list) {
                         %>
                         <a href="#" class="list-group-item list-group-item-action py-2 lh-tight" style="height: 100px;" onclick="function() {
-                                $('#main').load('detailed_question.jsp?qid=<%=question.id%>');
+                                $('#main').load('detailed_question.jsp?qid=<%=question.id%>&classid=<%=classid%>');
                                 }">
                             <div class="row">
                                 <strong class="mb-1 col-10 text-truncate"><%=question.title%></strong>

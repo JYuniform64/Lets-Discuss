@@ -11,7 +11,7 @@
 <form action="question_handler.jsp?classid=<%=classid%>" method="POST">
     <div class="input-group mb-3">
         <span class="input-group-text" id="title">Title</span>
-        <input type="text" class="form-control" placeholder="Write the title of your question here." name="title">
+        <input type="text" name="title" class="form-control" placeholder="Write the title of your question here." name="title">
     </div>
     <div class="input-group">
         <span class="input-group-text">Content</span>
