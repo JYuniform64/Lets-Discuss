@@ -11,13 +11,6 @@ public class DbInstance {
         return 0;
     }
 
-    // Get username corresponds to a certain uid.
-    public static String getUsername(int uid) throws SQLException{
-        /* Might be buggy! Due to id conversion from INT to STRING */
-        String select = String.format("SELECT * FROM users WHERE id = " + uid);
-        /* TODO */
-    }
-
     // Get uid by a **valid** email.
     // Should be used by 'email' module.
     public static long getUidByEmail(String email) {
@@ -72,7 +65,7 @@ public class DbInstance {
 
     public static List<Question> getQuestionListByClassId(int id) throws SQLException {
         String select =
-                String.format("SELECT * FROM question where class_id = '%d'", id);
+                String.format("SELECT * FROM question where class_id = '%d' ORDER BY DATE(modified_date) DESC", id);
         return DbAccessor.getDataList(select, nullRet(DbInstance::getQuestionByRs));
     }
 
