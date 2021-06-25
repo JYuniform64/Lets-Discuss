@@ -10,7 +10,7 @@ window.addEventListener("load", function () {
             (response) => {
                 response.json().then(j => {
                     if (j["success"]) {
-                        window.location.href = "./index.html"
+                        window.location.href = "./index.jsp"
                     } else {
                         alert(j["message"])
                     }
