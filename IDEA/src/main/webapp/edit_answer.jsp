@@ -28,6 +28,14 @@
     </div>
     <button id="submit_btn" class="btn btn-primary col-2 float-right" type="submit">Submit</button>
     <script>
+        function xSSFilter(str) {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
         function nl2br (str, is_xhtml) {
             var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';
             return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
@@ -41,6 +49,8 @@
                 alert("Answer cannot be empty!");
                 return false;
             }
+            let a = document.getElementById("edit").value;
+            document.getElementById("edit").value = xSSFilter(a);
             return true;
         }
 

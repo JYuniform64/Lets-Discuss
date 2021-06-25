@@ -32,6 +32,14 @@
     </div>
     <button id="submit_btn" class="btn btn-primary col-2 float-right" type="submit">Submit</button>
     <script>
+        function xSSFilter(str) {
+            return str
+                .replace(/&/g, '&amp;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;');
+        }
         function nl2br (str, is_xhtml) {
             var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';
             return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
@@ -41,6 +49,8 @@
         }
 
         function check() {
+            let title_v = document.getElementById("title").value
+            let edit_v = document.getElementById("edit").value
             if (document.getElementById("title").value.trim() == "") {
                 alert("Question title cannot be empty!");
                 return false;
@@ -49,6 +59,8 @@
                 alert("Question content cannot be empty!");
                 return false;
             }
+            document.getElementById("title").value = xSSFilter(title_v);
+            document.getElementById("edit").value = xSSFilter(edit_v);
             return true;
         }
 
