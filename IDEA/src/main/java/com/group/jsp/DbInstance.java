@@ -88,12 +88,12 @@ public class DbInstance {
     }
 
     public static User getUserById(int id) throws SQLException {
-        String select = String.format("SELECT * FROM user WHERE id = %s", id);
+        String select = String.format("SELECT * FROM users WHERE id = %s", id);
         return DbAccessor.getData(select, nullRet(DbInstance::getUserByRs));
     }
 
     public static User getUserByEmail(String email) throws SQLException {
-        String select = String.format("SELECT * FROM user WHERE id = '%s'", email);
+        String select = String.format("SELECT * FROM users WHERE email = '%s'", email);
         return DbAccessor.getData(select, nullRet(DbInstance::getUserByRs));
     }
 

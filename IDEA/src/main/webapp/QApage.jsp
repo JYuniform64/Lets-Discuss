@@ -102,6 +102,10 @@
     function vote_handler(obj) {
 
     }
+
+    function load_detailed_question(question_id, class_id) {
+        $('#main').load('detailed_question.jsp?qid='+question_id+'&classid='+class_id);
+    }
 </script>
 
 <body>
@@ -126,9 +130,7 @@
                             List<Question> question_list = DbInstance.getQuestionListByClassId(Integer.parseInt(classid));
                             for (Question question : question_list) {
                         %>
-                        <a href="#" class="list-group-item list-group-item-action py-2 lh-tight" style="height: 100px;" onclick="function() {
-                                $('#main').load('detailed_question.jsp?qid=<%=question.id%>&classid=<%=classid%>');
-                                }">
+                        <a href="#" class="list-group-item list-group-item-action py-2 lh-tight" style="height: 100px;" onclick="load_detailed_question(<%=question.id%>,<%=classid%>)">
                             <div class="row">
                                 <strong class="mb-1 col-10 text-truncate"><%=question.title%></strong>
                                 <small class="col-2 p-0"><%=simpleDateFormat.format(question.modified_date)%></small>

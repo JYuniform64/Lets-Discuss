@@ -30,7 +30,7 @@ public class LoginApi extends HttpServlet {
         if (method != null) {
             if (method.equals("logout")) {
                 UserCtrl.logOut(request.getSession());
-                response.sendRedirect("index.html");
+                response.sendRedirect("index.jsp");
             }
         }
     }
