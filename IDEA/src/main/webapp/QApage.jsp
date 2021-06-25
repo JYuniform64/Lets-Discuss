@@ -77,13 +77,6 @@
     var md = window.markdownit();
     md.use(window.markdownitLatex2img);
 
-    function rendermd() {
-        var text = document.getElementById('edit').innerText;
-        var result = md.render(text);
-        document.getElementById('show').innerHTML = result;
-        hljs.highlightAll();
-    }
-
     /* ------------------- Tab support ----------------------------- */
     function keyHandler(e) {
         var TABKEY = 9;

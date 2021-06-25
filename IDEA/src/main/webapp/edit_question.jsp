@@ -32,9 +32,6 @@
     </div>
     <button id="submit_btn" class="btn btn-primary col-2 float-right" type="submit">Submit</button>
     <script>
-        const textarea = document.getElementById('edit');
-        textarea.addEventListener('keyup', rendermd);
-
         function nl2br (str, is_xhtml) {
             var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';
             return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
@@ -53,6 +50,15 @@
                 return false;
             }
             return true;
+        }
+
+        const textarea = document.getElementById('edit');
+        textarea.addEventListener('keyup', rendermd);
+        function rendermd() {
+            var text = document.getElementById('edit').value;
+            var result = md.render(text);
+            document.getElementById('show').innerHTML = result;
+            hljs.highlightAll();
         }
     </script>
 </form>
