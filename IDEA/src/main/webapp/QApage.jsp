@@ -8,6 +8,7 @@
         return;
     }
     String classid = request.getParameter("classid");
+    String qid = request.getParameter("qid");
 %>
 
 <!DOCTYPE html>
@@ -170,5 +171,14 @@
     </div>
     <!-- TODO: footer -->
 </body>
-
+<%
+    if (qid != null) {
+%>
+<script>
+    $('#main').load('detailed_question.jsp?qid=<%=qid%>&classid=<%=classid%>');
+</script>
+<%
+    }
+%>
 </html>
+
