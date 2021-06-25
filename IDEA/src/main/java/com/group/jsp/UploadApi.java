@@ -25,7 +25,8 @@ public class UploadApi extends HttpServlet {
             throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         Part filePart = request.getPart("file");
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+        String p = filePart.getSubmittedFileName();
+        String fileName = Paths.get(p).getFileName().toString(); // MSIE fix.
         if (fileName.equals("")) { return; }
         ServletContext context = request.getServletContext();
         String path = context.getRealPath("/files");
