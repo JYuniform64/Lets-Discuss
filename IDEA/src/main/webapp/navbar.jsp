@@ -1,4 +1,5 @@
 <%@ page import="com.group.jsp.UserCtrl" %>
+<%@ page import="com.group.jsp.DbInstance" %>
 <!-- Nav bar. Ajax loaded into every page. -->
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -38,11 +39,11 @@
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
             <a class="navbar-brand" href="#">
-                <img src="#" style="width:40px;">
+                <img src="https://i.stack.imgur.com/rYsym.png" style="width:40px;">
             </a>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" data-toggle="dropdown">
-                    Username
+                    <%= DbInstance.getUserById(UserCtrl.getUid(request.getSession())) %>>
                 </a>
                 <!-- further modification: show differently whether login -->
                 <div class="dropdown-menu">

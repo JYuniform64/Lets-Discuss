@@ -1,7 +1,7 @@
 <%-- This jsp file is used for loadding a specified question and its corresponding answers of 'Q&A' page. --%>
 <%@ page language="java" import="java.util.*, java.text.SimpleDateFormat, com.group.jsp.*" contentType="text/html; charset=utf-8"%>
 <%@ page import="java.sql.SQLException" %>
-<%@ page errorPage = "showError.jsp" %>
+
 <%
     request.setCharacterEncoding("utf-8");
     if (request.getParameter("qid") == null)

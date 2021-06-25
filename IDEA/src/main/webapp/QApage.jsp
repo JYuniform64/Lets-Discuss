@@ -3,8 +3,10 @@
 
 <%
     request.setCharacterEncoding("utf-8");
-    if (request.getParameter("classid") == null)
+    if (request.getParameter("classid") == null) {
         response.sendRedirect("index.jsp");
+        return;
+    }
     String classid = request.getParameter("classid");
 %>
 
