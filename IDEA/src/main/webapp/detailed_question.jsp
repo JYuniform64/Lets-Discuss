@@ -70,7 +70,7 @@
     <div class="col-md-1">
         <div class="upvotejs" id="a<%=answer.id%>">
             <a class="upvote" title="This is good stuff. Vote it up! (Click again to undo)"></a>
-            <span class="count" title="Total number of votes">1</span>
+            <span class="count" title="Total number of votes">0</span>
             <a class="downvote"
                 title="This is not useful. Vote it down. (Click again to undo)"></a>
         </div>
