@@ -15,19 +15,19 @@ CREATE TABLE IF NOT EXISTS `mydb`.`question` (
     `good_question_count` INT NULL,
     `teacher_ask` BIT NULL,
     `teacher_answer` BIT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`class_id`) REFERENCES class(`id`)
-) ENGINE = InnoDB
+) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`users` (
     `id` INT NOT NULL ,
     `name` VARCHAR (50) CHARACTER SET 'utf8' NOT NULL,
     `email` VARCHAR (100) CHARACTER SET 'utf8' NOT NULL,
     `password` CHAR (44) NOT NULL,
-    `type` INT NOT NULL
-    PRIMARY KEY (`id`)
+    `type` INT NOT NULL,
+    PRIMARY KEY (`id`),
     UNIQUE (`email`)
-) ENGINE = InnoDB
+) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`answer` (
     `id` INT NOT NULL,
@@ -35,9 +35,9 @@ CREATE TABLE IF NOT EXISTS `mydb`.`answer` (
     `date` DATE NOT NULL,
     `user_id` INT NULL,
     `content` TEXT(65535) NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`question_id`) REFERENCES question (id)
-) ENGINE = InnoDB
+) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`class` (
     `id` INT NOT NULL,
