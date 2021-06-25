@@ -11,11 +11,6 @@ public class DbInstance {
         return 0;
     }
 
-    // Get username corresponds to a certain uid.
-    public static String getUsername(long uid) {
-        return "";
-    }
-
     // Get uid by a **valid** email.
     // Should be used by 'email' module.
     public static long getUidByEmail(String email) {
@@ -53,7 +48,7 @@ public class DbInstance {
     public static Question getQuestionById(int id) throws SQLException {
         String select =
                 String.format("SELECT * FROM question where id = '%d'", id);
-        return DbAccessor.getData(select, DbInstance::getQuestionByRs);
+        return DbAccessor.getData(select, nullRet(DbInstance::getQuestionByRs));
     }
 
     public static Answer getAnswerById(int id) throws SQLException {
@@ -62,16 +57,16 @@ public class DbInstance {
         return DbAccessor.getData(select, nullRet(DbInstance::getAnswerByRs));
     }
 
-    public static List<Answer> getAnswerByClassId(int id) throws SQLException {
+    public static List<Answer> getAnswerListByQuestionId(int id) throws SQLException {
         String select =
-                String.format("SELECT * FROM answer where class_id = '%d'", id);
+                String.format("SELECT * FROM answer where question_id = '%d'", id);
         return DbAccessor.getDataList(select, DbInstance::getAnswerByRs);
     }
 
     public static List<Question> getQuestionListByClassId(int id) throws SQLException {
         String select =
-                String.format("SELECT * FROM question where class_id = '%d'", id);
-        return DbAccessor.getDataList(select, nullRet(DbInstance::getQuestionByRs));
+                String.format("SELECT * FROM question where class_id = %d", id);
+        return DbAccessor.getDataList(select, DbInstance::getQuestionByRs);
     }
 
     public static List<Question> getTop10Question() throws SQLException {
