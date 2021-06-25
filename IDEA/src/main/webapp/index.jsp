@@ -1,5 +1,4 @@
-<%@ page import="com.group.jsp.Question" %>
-<%@ page import="com.group.jsp.DbInstance" %>
+<%@ page language="java" import="com.group.jsp.DbInstance, com.group.jsp.Question" contentType="text/html; charset=utf-8"%>
 <!DOCTYPE html>
 <html>
 
