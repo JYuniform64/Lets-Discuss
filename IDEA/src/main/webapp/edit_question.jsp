@@ -8,10 +8,10 @@
     String classid = request.getParameter("classid");
 %>
 
-<form action="question_handler.jsp?classid=<%=classid%>" method="POST">
+<form action="question_handler.jsp?classid=<%=classid%>" method="POST" onsubmit="return check()">
     <div class="input-group mb-3">
-        <span class="input-group-text" id="title">Title</span>
-        <input type="text" name="title" class="form-control" placeholder="Write the title of your question here.">
+        <span class="input-group-text">Title</span>
+        <input type="text" name="title" class="form-control" placeholder="Write the title of your question here." id="title">
     </div>
     <div class="input-group">
         <span class="input-group-text">Content</span>
@@ -41,6 +41,18 @@
         }
         document.getElementById('submit_btn').onclick = function () {
             document.getElementById('edit').value = nl2br(document.getElementById('edit').value, false);
+        }
+
+        function check() {
+            if (document.getElementById("title").value.trim() == "") {
+                alert("Question title cannot be empty!");
+                return false;
+            }
+            if (document.getElementById("edit").value.trim() == "") {
+                alert("Question content cannot be empty!");
+                return false;
+            }
+            return true;
         }
     </script>
 </form>

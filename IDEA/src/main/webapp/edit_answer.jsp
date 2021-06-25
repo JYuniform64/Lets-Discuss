@@ -16,7 +16,7 @@
 <div style="height: 4em;">
     <h2>Write Your Answer...</h2>
 </div>
-<form action="answer_handler.jsp?classid=<%=classid%>&qid=<%=qid%>" method="POST" id="answer">
+<form action="answer_handler.jsp?classid=<%=classid%>&qid=<%=qid%>" method="POST" id="answer" onsubmit="return check()">
     <div class="input-group">
         <span class="input-group-text">Content</span>
         <textarea id="edit" class="form-control font-monospace"
@@ -39,5 +39,12 @@
             document.getElementById('edit').value = nl2br(document.getElementById('edit').value, false);
         }
 
+        function check() {
+            if (document.getElementById("edit").value.trim() == "") {
+                alert("Answer cannot be empty!");
+                return false;
+            }
+            return true;
+        }
     </script>
 </form>
