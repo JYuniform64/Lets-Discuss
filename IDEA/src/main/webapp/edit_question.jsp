@@ -8,10 +8,10 @@
     String classid = request.getParameter("classid");
 %>
 
-<form action="question_handler.jsp?classid=<%=classid%>" method="POST">
+<form action="question_handler.jsp?classid=<%=classid%>" method="POST" onsubmit="return check()">
     <div class="input-group mb-3">
-        <span class="input-group-text" id="title">Title</span>
-        <input type="text" name="title" class="form-control" placeholder="Write the title of your question here.">
+        <span class="input-group-text">Title</span>
+        <input type="text" name="title" class="form-control" placeholder="Write the title of your question here." id="title">
     </div>
     <div class="input-group">
         <span class="input-group-text">Content</span>
@@ -23,7 +23,7 @@
         style="margin: 2em 10px; border: 1px black solid; border-radius: 5px; height: 15em; overflow-y: scroll;">
     </div>
     <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="question_type" id="inlineRadio1" value="question">
+    <input class="form-check-input" type="radio" name="question_type" id="inlineRadio1" value="question" checked="checked">
     <label class="form-check-label" for="inlineRadio1">question</label>
     </div>
     <div class="form-check form-check-inline">
@@ -32,15 +32,33 @@
     </div>
     <button id="submit_btn" class="btn btn-primary col-2 float-right" type="submit">Submit</button>
     <script>
-        const textarea = document.getElementById('edit');
-        textarea.addEventListener('keyup', rendermd);
-
         function nl2br (str, is_xhtml) {
             var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br ' + '/>' : '<br>';
             return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
         }
         document.getElementById('submit_btn').onclick = function () {
             document.getElementById('edit').value = nl2br(document.getElementById('edit').value, false);
+        }
+
+        function check() {
+            if (document.getElementById("title").value.trim() == "") {
+                alert("Question title cannot be empty!");
+                return false;
+            }
+            if (document.getElementById("edit").value.trim() == "") {
+                alert("Question content cannot be empty!");
+                return false;
+            }
+            return true;
+        }
+
+        const textarea = document.getElementById('edit');
+        textarea.addEventListener('keyup', rendermd);
+        function rendermd() {
+            var text = document.getElementById('edit').value;
+            var result = md.render(text);
+            document.getElementById('show').innerHTML = result;
+            hljs.highlightAll();
         }
     </script>
 </form>
