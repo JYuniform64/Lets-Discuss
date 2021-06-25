@@ -23,7 +23,7 @@
         style="margin: 2em 10px; border: 1px black solid; border-radius: 5px; height: 15em; overflow-y: scroll;">
     </div>
     <div class="form-check form-check-inline">
-    <input class="form-check-input" type="radio" name="question_type" id="inlineRadio1" value="question">
+    <input class="form-check-input" type="radio" name="question_type" id="inlineRadio1" value="question" checked="checked">
     <label class="form-check-label" for="inlineRadio1">question</label>
     </div>
     <div class="form-check form-check-inline">
