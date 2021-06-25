@@ -63,8 +63,8 @@
                     <h5 class="mb-1"><%=i.title%></h5>
                     <small><%=i.create_date%></small>
                 </div>
-                <p class="mb-1"><%=DbInstance.getClassById(i.id).name%></p>
-                <small><%=i.tags%></small>
+                <p class="mb-1"><%=DbInstance.getClassById(i.class_id).name%></p>
+                <small><%=(i.tags.length == 0)?"":i.tags[0]%></small>
             </a>
             <%}%>
         </ul>
