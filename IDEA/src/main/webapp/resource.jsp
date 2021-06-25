@@ -33,21 +33,32 @@
         $('#navbar').load('navbar.jsp');
     })
 </script>
+<style>
+    .list-group-item:hover {
+        background-color: #0d6efd;
+        border-top: 1px solid #96aeff;
+        border-left-color: #fff;
+        border-right-color: #fff;
+    }
+</style>
 <body>
 <div id="navbar">
 </div>
 <div id="content">
     <div class="m-auto w-50">
+        <div class="fs-3" style="margin: 1em 0em;">Upload Resource File</div>
         <form action="./UploadApi" method="post" enctype="multipart/form-data" onsubmit="return check()">
-            <label class="form-label" for="customFile">Upload Resource File</label>
-            <input type="file" class="form-control" id="customFile" name="file" />
-            <button type="submit" class="btn btn-primary mt-1" id="upload" name="upload">Upload</button>
+            <div class="input-group">
+                <input type="file" class="form-control" id="customFile" name="file" />
+                <button type="submit" class="btn btn-outline-primary" id="upload" name="upload">Upload</button>
+            </div>
         </form>
     </div>
     <div class="m-auto w-50 mt-3">
+        <div class="fs-3" style="margin: 1em 0em;">Resource File List</div>
         <div class="list-group">
             <%for (UploadFile i:fileList){%>
-                <a href=<%=i.url%> class="list-group-item list-group-item-action active">
+                <a href=<%=i.url%> class="list-group-item list-group-item-action">
                     <%=i.name%>
                 </a>
             <%}%>
