@@ -63,7 +63,7 @@
                 <div class="dropdown-menu">
                     <a class="dropdown-item" href="#">personal space</a>
                     <a class="dropdown-item" href="#">setting</a>
-                    <a class="dropdown-item" href="/LoginApi?method=logout">log out</a>
+                    <a class="dropdown-item" href="./LoginApi?method=logout">log out</a>
                 </div>
                 <!-- end -->
             </li>
