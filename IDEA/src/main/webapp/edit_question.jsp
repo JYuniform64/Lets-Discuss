@@ -45,7 +45,7 @@
             return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
         }
         document.getElementById('submit_btn').onclick = function () {
-            document.getElementById('edit').value = nl2br(document.getElementById('edit').value, false);
+            document.getElementById('edit').value = nl2br(xSSFilter(document.getElementById('edit').value, false));
         }
 
         function check() {
@@ -60,7 +60,6 @@
                 return false;
             }
             document.getElementById("title").value = xSSFilter(title_v);
-            document.getElementById("edit").value = xSSFilter(edit_v);
             return true;
         }
 

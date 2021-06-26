@@ -41,7 +41,7 @@
             return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
         }
         document.getElementById('submit_btn').onclick = function () {
-            document.getElementById('edit').value = nl2br(document.getElementById('edit').value, false);
+            document.getElementById('edit').value = nl2br(xSSFilter(document.getElementById('edit').value, false));
         }
 
         function check() {
@@ -49,8 +49,6 @@
                 alert("Answer cannot be empty!");
                 return false;
             }
-            let a = document.getElementById("edit").value;
-            document.getElementById("edit").value = xSSFilter(a);
             return true;
         }
 
