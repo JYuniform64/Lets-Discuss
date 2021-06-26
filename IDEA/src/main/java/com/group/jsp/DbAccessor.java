@@ -23,10 +23,10 @@ public class DbAccessor {
     static {
         try {
             HikariConfig config = new HikariConfig();
-            config.setJdbcUrl("jdbc:mysql://localhost:3306/mydb");
-            config.setUsername("root");
+            config.setJdbcUrl("jdbc:mysql://172.18.187.253:3306/g18340081");
+            config.setUsername("user");
             config.setDriverClassName("com.mysql.cj.jdbc.Driver");
-            config.setPassword("");
+            config.setPassword("123");
             config.addDataSourceProperty("connectionTimeout", "1000");
             config.addDataSourceProperty("idleTimeout", "60000");
             config.addDataSourceProperty("maximumPoolSize", "20");
